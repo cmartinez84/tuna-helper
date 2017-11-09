@@ -87,16 +87,11 @@ class Audio extends Component {
  changeValue = (effect, value) =>{
    this.props.changeValue(effect, value);
   }
-  poop = () =>{
-    this.chorusNodeInit.rate = 8;
-    console.log(this.chorusNodeInit);
-  }
 
   render() {
     return (
     <div>
       <button onClick={this.loadTuna}>loadTuna</button>
-      <button onClick={this.poop}>poop</button>
       <button onClick={this.audioFileLoader}>PLAY</button>
       <button onClick={this.destroy}>DESTROY</button>
       {Object.keys(this.sampleData).map((key, i)=>
