@@ -6,26 +6,10 @@ import ControlKnob from './controlknob.jsx';
 
 class Audio extends Component {
 
-
-    featuredEffect = "reverb";
     createAudioContext = window.AudioContext || window.webkitAudioContext || window.webkitAudioContext;
     ctx = new this.createAudioContext();
     tuna = new Tuna(this.ctx);
-    chorusNodeInit  = new this.tuna.Chorus({
-         rate: 1.5,
-         feedback:0.2,
-         delay: 0.0045,
-         bypass: 0
-    });
-
-    constructor(props){
-      super(props);
-      this.state = {
-        featuredEffectNode: this.chorusNodeInit
-      }
-    }
-
-
+    chorusNodeInit;
 
 
     sampleData = {
@@ -50,7 +34,20 @@ class Audio extends Component {
         increments: 1
       }
     }
+    componentWillReceiveProps = (nextProps) =>{
+      // Object.keys(nextProps.aspects).map(function(key, index) {
+      //   this.chorusNodeInit[key]: nextProps.aspects[key];
+      // });
+      this.chorusNodeInit = {
+        ...this.chorusNodeInit,
+        ...nextProps.aspects
+      }
+      var newthing = this.chorusNodeInit;
+      this.chorusNodeInit = null;
+      this.chorusNodeInit = newthing;
+    }
      audioFileLoader = () =>{
+
         var soundObj = {};
         soundObj.fileDirectory = audioPath;
 
@@ -69,31 +66,34 @@ class Audio extends Component {
         soundObj.play = () => {
             var playSound = this.ctx.createBufferSource();
             playSound.buffer = soundObj.soundToPlay;
-            playSound.connect(this.state.featuredEffectNode);
-            this.state.featuredEffectNode.connect(this.ctx.destination);
+            playSound.connect(this.chorusNodeInit);
+            this.chorusNodeInit.connect(this.ctx.destination);
             playSound.start()
         }
 
         return soundObj;
     }
  // stuf.play();
+ loadTuna = () =>{
+   this.chorusNodeInit  = new this.tuna.Chorus({
+        rate: this.props.aspects.rate,
+        feedback:this.props.aspects.feedback,
+        delay: this.props.aspects.delay,
+        bypass: this.props.aspects.bypass,
+   });
+ }
  destroy = () => {
-   this.state.state.chorusNode = false;
-   console.log(this.state.chorusNode);
+ //   this.state.state.chorusNode = false;
+ //   console.log(this.state.chorusNode);
  }
  changeValue = (effect, value) =>{
-  //  this.state.featuredEffectNode.effect = value;
-  //  console.log(this.state.chorusNode.effect);
-  // console.log(this);
-  var stuff = this.state.featuredEffectNode;
-  stuff[effect] = value;
-
-  this.setState({featuredEffectNode: stuff});
+   this.props.changeValue(effect, value);
  }
 
   render() {
     return (
     <div>
+      <button onClick={this.loadTuna}>loadTuna</button>
       <button onClick={this.audioFileLoader}>PLAY</button>
       <button onClick={this.destroy}>DESTROY</button>
       {Object.keys(this.sampleData).map((key, i)=>

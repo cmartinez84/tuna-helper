@@ -11,19 +11,28 @@ import './App.css';
 
 
 class App extends Component {
+
+  state = {
+    aspects:
+    {
+      rate: 0,
+      feedback:0,
+      delay: 0,
+      bypass: 0
+    }
+  }
   //
-  featuredEffect = "reverb";
   // createAudioContext = window.AudioContext || window.webkitAudioContext || window.webkitAudioContext;
   // ctx = new this.createAudioContext();
   //
   //
-  tuna = new Tuna(this.ctx);
-  chorusNode = new this.tuna.Chorus({
-       rate: 1.5,
-       feedback: 0.2,
-       delay: 0.0045,
-       bypass: 0
-  });
+  // tuna = new Tuna(this.ctx);
+  // chorusNode = new this.tuna.Chorus({
+  //      rate: 1.5,
+  //      feedback: 0.2,
+  //      delay: 0.0045,
+  //      bypass: 0
+  // });
 
   //
   // audioFileLoader = () =>{
@@ -95,17 +104,26 @@ class App extends Component {
   //             return null;
   //     }
   // })()}
+  changeValue = (effect, value) =>{
+    var aspects = {
+      ...this.state.aspects,
+      [effect]: parseInt(value)
 
-
+    }
+   this.setState({aspects: aspects});
+  //  console.log(this.chorusNodeInit);
+  }
+  // rate={this.state.aspects.rate}
+  // delay={this.state.aspects.delay}
+  // bypass={this.state.aspects.bypass}
+  // feedback={this.state.aspects.feedback}
   render() {
     return (
       <div >
-        <Audio/>
-
-
-
-
-
+        <Audio
+          changeValue={this.changeValue}
+          aspects={this.state.aspects}
+          />
 
       </div>
     );
