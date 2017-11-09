@@ -35,16 +35,14 @@ class Audio extends Component {
       }
     }
     componentWillReceiveProps = (nextProps) =>{
-      // Object.keys(nextProps.aspects).map(function(key, index) {
-      //   this.chorusNodeInit[key]: nextProps.aspects[key];
-      // });
-      this.chorusNodeInit = {
-        ...this.chorusNodeInit,
-        ...nextProps.aspects
-      }
-      var newthing = this.chorusNodeInit;
-      this.chorusNodeInit = null;
-      this.chorusNodeInit = newthing;
+      Object.keys(nextProps.aspects).map((key, index) => {
+        this.chorusNodeInit[key] = nextProps.aspects[key];
+      });
+      // this.chorusNodeInit = {
+      //   ...this.chorusNodeInit,
+      //   ...nextProps.aspects
+      // }
+      console.log(this.chorusNodeInit);
     }
      audioFileLoader = () =>{
 
@@ -88,12 +86,17 @@ class Audio extends Component {
  }
  changeValue = (effect, value) =>{
    this.props.changeValue(effect, value);
- }
+  }
+  poop = () =>{
+    this.chorusNodeInit.rate = 8;
+    console.log(this.chorusNodeInit);
+  }
 
   render() {
     return (
     <div>
       <button onClick={this.loadTuna}>loadTuna</button>
+      <button onClick={this.poop}>poop</button>
       <button onClick={this.audioFileLoader}>PLAY</button>
       <button onClick={this.destroy}>DESTROY</button>
       {Object.keys(this.sampleData).map((key, i)=>
