@@ -6,7 +6,7 @@ class ControlKnob extends Component {
 
 onValueChange = (e) =>{
   var newValue = e.target.value;
-  console.log(newValue);
+  console.log(this.props);
   this.props.changeValue(this.props.effect, newValue);
 }
 

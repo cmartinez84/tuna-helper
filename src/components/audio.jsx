@@ -78,12 +78,17 @@ class Audio extends Component {
     }
  // stuf.play();
  destroy = () => {
-  //  this.state.state.chorusNode = false;
-  //  console.log(this.state.chorusNode);
+   this.state.state.chorusNode = false;
+   console.log(this.state.chorusNode);
  }
  changeValue = (effect, value) =>{
-  //  this.state.chorusNode.effect = value;
+  //  this.state.featuredEffectNode.effect = value;
   //  console.log(this.state.chorusNode.effect);
+  // console.log(this);
+  var stuff = this.state.featuredEffectNode;
+  stuff[effect] = value;
+
+  this.setState({featuredEffectNode: stuff});
  }
 
   render() {
