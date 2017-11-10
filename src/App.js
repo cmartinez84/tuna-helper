@@ -12,6 +12,9 @@ import Delay from './components/delay.jsx';
 import Reverb from './components/reverb.jsx';
 import PingPongDelay from './components/pingPongDelay.jsx';
 import Audio from './components/audio.jsx';
+import Header from './components/header.js';
+import EffectParams from './components/effectParameterLibrary';
+
 import './App.css';
 
 class App extends Component {
@@ -37,16 +40,20 @@ class App extends Component {
 
   render() {
     return (
+
       <BrowserRouter>
-        <Switch>
-          <Route
-            path="/:effectName"
-            render={routeProps=><Audio
-                        {...routeProps}
-                        changeValue={this.changeValue}
-                        aspects={this.state.aspects}
-            />}/>
-        </Switch>
+        <div>
+          <Header/>
+          <Switch>
+            <Route
+              path="/:effectName"
+              render={routeProps=><Audio
+                          {...routeProps}
+                          changeValue={this.changeValue}
+                          aspects={this.state.aspects}
+              />}/>
+          </Switch>
+        </div>
       </BrowserRouter>
     );
   }
